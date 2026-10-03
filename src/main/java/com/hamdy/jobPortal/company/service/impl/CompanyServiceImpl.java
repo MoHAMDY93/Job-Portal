@@ -1,6 +1,7 @@
 package com.hamdy.jobPortal.company.service.impl;
 
 import com.hamdy.jobPortal.company.service.ICompnayService;
+import com.hamdy.jobPortal.constants.ApplicationConstants;
 import com.hamdy.jobPortal.dto.CompanyDto;
 import com.hamdy.jobPortal.dto.JobDto;
 import com.hamdy.jobPortal.entity.Company;
@@ -24,7 +25,7 @@ public class CompanyServiceImpl implements ICompnayService {
 
     @Override
     public List<CompanyDto> getAllCompanies() {
-        List<Company> companiesList = companyRepository.findAll();
+        List<Company> companiesList = companyRepository.fetchCompaniesWithJobsByStatus(ApplicationConstants.ACTIVE_STATUS);
         return companiesList.stream().map(this::transformCompanyToDto).collect(Collectors.toList());
     }
 
