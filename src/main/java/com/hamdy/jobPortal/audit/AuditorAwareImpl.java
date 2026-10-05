@@ -1,5 +1,6 @@
 package com.hamdy.jobPortal.audit;
 
+import com.hamdy.jobPortal.util.ApplicationUtility;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,6 @@ import java.util.Optional;
 public class AuditorAwareImpl implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.of("Anonymous User");
+        return Optional.of(ApplicationUtility.getLoggedInUser());
     }
 }

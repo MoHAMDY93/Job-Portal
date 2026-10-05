@@ -37,7 +37,7 @@
     <!--  =====================  -->
     <!--  Application-specific ERROR logs  -->
     <!--  =====================  -->
-    <logger name="com.eazybytes.jobportal" level="INFO" additivity="false">
+    <logger name="com.eazybytes.jobportal" level="TRACE" additivity="false">
         <appender-ref ref="RollingFile"/>
         <appender-ref ref="Console"/>
     </logger>
