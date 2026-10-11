@@ -1,7 +1,7 @@
 package com.hamdy.jobPortal.company.controller;
 
 import com.hamdy.jobPortal.dto.CompanyDto;
-import com.hamdy.jobPortal.company.service.ICompnayService;
+import com.hamdy.jobPortal.company.service.ICompanyService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyController {
 
-    private final ICompnayService companyService;
+    private final ICompanyService companyService;
 
 //    @Autowired // optional
 //    public CompanyController(ICompnayService companyService) {

@@ -4,7 +4,7 @@ import com.hamdy.jobPortal.dto.CompanyDto;
 
 import java.util.List;
 
-public interface ICompnayService {
+public interface ICompanyService {
     List<CompanyDto> getAllCompanies();
 
     boolean createCompany(CompanyDto companyDto);
