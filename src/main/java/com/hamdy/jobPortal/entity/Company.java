@@ -24,6 +24,25 @@ import java.util.List;
         @NamedQuery(
                 name = "Company.fetchCompaniesWithJobsByStatus",
                 query = "SELECT DISTINCT c FROM Company c JOIN FETCH c.jobs j WHERE j.status = :status"
+        ),
+        @NamedQuery(
+                name = "Company.updateCompanyDetails",
+                query =
+                        """
+                                UPDATE Company c SET
+                                                            c.name = :name,
+                                                            c.logo = :logo,
+                                                            c.industry = :industry,
+                                                            c.size = :size,
+                                                            c.rating = :rating,
+                                                            c.locations = :locations,
+                                                            c.founded = :founded,
+                                                            c.description = :description,
+                                                            c.employees = :employees,
+                                                            c.website = :website
+                                                        WHERE c.id = :id
+                        """
+
         )
 })
 
