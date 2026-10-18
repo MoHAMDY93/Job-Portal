@@ -1,9 +1,13 @@
 package com.hamdy.jobPortal.job.service.impl;
 
+import com.hamdy.jobPortal.dto.JobApplicationDto;
 import com.hamdy.jobPortal.dto.JobDto;
+import com.hamdy.jobPortal.dto.UpdateJobApplicationDto;
 import com.hamdy.jobPortal.entity.Job;
+import com.hamdy.jobPortal.entity.JobApplication;
 import com.hamdy.jobPortal.entity.JobPortalUser;
 import com.hamdy.jobPortal.job.service.IJobService;
+import com.hamdy.jobPortal.repository.JobApplicationRepository;
 import com.hamdy.jobPortal.repository.JobPortalUserRepository;
 import com.hamdy.jobPortal.repository.JobRepository;
 import com.hamdy.jobPortal.util.ApplicationUtility;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 public class JobServiceImpl implements IJobService {
     private final JobRepository jobRepository;
     private final JobPortalUserRepository userRepository;
+    private final JobApplicationRepository jobApplicationRepository;
 
     @Override
     public List<JobDto> getEmployerJobs(String employerEmail) {
@@ -71,6 +76,22 @@ public class JobServiceImpl implements IJobService {
                 .orElseThrow(() -> new RuntimeException("Job not found"));
         job.setStatus(status);
         return ApplicationUtility.transformJobToDto(job);
+    }
+
+    @Override
+    public List<JobApplicationDto> getApplicationsByJobForEmployer(Long jobId) {
+        List<JobApplication> applications = jobApplicationRepository.findByJobIdOrderByAppliedAtAsc(jobId);
+        return applications.stream()
+                .map(ApplicationUtility::mapToJobApplicationDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public boolean updateJobApplication(UpdateJobApplicationDto dto) {
+        int updatedRows = jobApplicationRepository.updateStatusAndNotesById(
+                dto.status().name(), dto.notes(),dto.applicationId(), ApplicationUtility.getLoggedInUser());
+        return updatedRows > 0;
     }
 
     private Job transformDtoToEntity(JobDto jobDto) {

@@ -27,18 +27,53 @@
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
     </appender>
-    <!--  =====================  -->
-    <!--  Root Logger  -->
-    <!--  =====================  -->
-    <root level="INFO">
-        <appender-ref ref="RollingFile"/>
-        <appender-ref ref="Console"/>
-    </root>
-    <!--  =====================  -->
-    <!--  Application-specific ERROR logs  -->
-    <!--  =====================  -->
-    <logger name="com.eazybytes.jobportal" level="TRACE" additivity="false">
-        <appender-ref ref="RollingFile"/>
-        <appender-ref ref="Console"/>
-    </logger>
+
+    <springProfile name="prod">
+        <!--  =====================  -->
+        <!--  Root Logger  -->
+        <!--  =====================  -->
+        <root level="ERROR">
+            <appender-ref ref="RollingFile"/>
+        </root>
+        <!--  =====================  -->
+        <!--  Application-specific ERROR logs  -->
+        <!--  =====================  -->
+        <logger name="com.eazybytes.jobportal" level="ERROR" additivity="false">
+            <appender-ref ref="RollingFile"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="qa">
+        <!--  =====================  -->
+        <!--  Root Logger  -->
+        <!--  =====================  -->
+        <root level="INFO">
+            <appender-ref ref="RollingFile"/>
+        </root>
+        <!--  =====================  -->
+        <!--  Application-specific ERROR logs  -->
+        <!--  =====================  -->
+        <logger name="com.eazybytes.jobportal" level="INFO" additivity="false">
+            <appender-ref ref="RollingFile"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="default">
+        <!--  =====================  -->
+        <!--  Root Logger  -->
+        <!--  =====================  -->
+        <root level="INFO">
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="Console"/>
+        </root>
+        <!--  =====================  -->
+        <!--  Application-specific ERROR logs  -->
+        <!--  =====================  -->
+        <logger name="com.eazybytes.jobportal" level="INFO" additivity="false">
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="Console"/>
+        </logger>
+    </springProfile>
+
+
 </configuration>

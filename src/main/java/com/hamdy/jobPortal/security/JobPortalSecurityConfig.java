@@ -1,6 +1,7 @@
 package com.hamdy.jobPortal.security;
 
 import com.hamdy.jobPortal.security.filter.JwtTokenValidationFilter;
+import com.hamdy.jobPortal.util.CorsProperties;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,8 +24,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -45,6 +44,8 @@ public class JobPortalSecurityConfig {
 
     @Qualifier("adminPaths")
     private final List<String> adminPaths;
+
+    private final CorsProperties corsProperties;
 
     @Bean
     SecurityFilterChain customSecurityFilterChain(HttpSecurity http) {
@@ -82,11 +83,11 @@ public class JobPortalSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-        config.setAllowedMethods(Collections.singletonList("*"));
-        config.setAllowedHeaders(Collections.singletonList("*"));
-        config.setAllowCredentials(true);
-        config.setMaxAge(3600L);
+        config.setAllowedOrigins(corsProperties.getAllowedOrigins());
+        config.setAllowedMethods(corsProperties.getAllowedMethods());
+        config.setAllowedHeaders(corsProperties.getAllowedHeaders());
+        config.setAllowCredentials(corsProperties.isAllowCredentials());
+        config.setMaxAge(corsProperties.getMaxAge());
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**" , config);
